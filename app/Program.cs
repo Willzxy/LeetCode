@@ -1,28 +1,42 @@
-﻿using System;
+﻿public class Solution {
+    public static string InverterText(string s){
+        string invertido = "";
 
-namespace app {
-    public class program {
-        public static void Main(string[] args){
-            int[] l1 = [2,4,3];
-            int[] l2 = [5,6,4];
-            int maior = l1.Length >= l2.Length? l1.Length: l2.Length;
-            int result = 0;
-            int mult = 1;
+        for(int i = (s.Length - 1); i >= 0; i--){
+            char caracter = s[i];
+            invertido += caracter;
+        }
 
-            for(int i = 0; i < maior; i++){
-                if(i <= l1.Length){
-                    result += l1[i] * mult;     
-                }
+        return invertido;
+    }
 
-                if (i <= l2.Length){
-                    result += l2[i] * mult;  
-                }
+    public static void IsPalindromo(string original, ref string invertido , ref string palindromo, ref bool left){
+        invertido = InverterText(original);
 
-                mult *= 10;
+        if(original == invertido || invertido.Length == 1){
+            palindromo = invertido;
+        }else {
+            left = !left;
+
+            if(left){
+                original = original[1..];
+            } else {
+                original = original[0..^1];
             }
 
-            List<int>? returned = new();
-            
+            IsPalindromo(original, ref invertido, ref palindromo, ref left);
         }
     }
+
+    public static void Main(string[] args){
+        string s = "abb";
+        string invertido = "";
+        string palindromo = "";
+        bool left = true;
+        
+        IsPalindromo(s, ref invertido, ref palindromo, ref left);
+        Console.WriteLine(palindromo);
+    }
 }
+
+// Anotação para willian, a arquitetura desta solução não vai resolver o problema. vamos usar o que aprender de recursão mas e recomeçar o projeto. vamos passar a usar um Loop While para resolver este exercicio 09/09
