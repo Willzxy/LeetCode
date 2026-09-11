@@ -10,32 +10,33 @@
         return invertido;
     }
 
-    public static void IsPalindromo(string original, ref string invertido , ref string palindromo, ref bool left){
-        invertido = InverterText(original);
+    public static string IsPalindromo(string original){
+        string copia = "";
+        string palindromo = "";
 
-        if(original == invertido || invertido.Length == 1){
-            palindromo = invertido;
-        }else {
-            left = !left;
-
-            if(left){
-                original = original[1..];
-            } else {
-                original = original[0..^1];
+        for(int i = 0; i < original.Length; i++) {
+            char characterInicial = original[i];
+            string teste = "" + characterInicial;
+            for(int v = i+1; v <= original.LastIndexOf(characterInicial); v++) {
+                char other = original[v];
+                teste += other;
             }
 
-            IsPalindromo(original, ref invertido, ref palindromo, ref left);
+            Console.WriteLine($"Teste {i}, Iniciando com letra{characterInicial}, Frase = {teste} ");
+            if(InverterText(teste) == teste && teste.Length > palindromo.Length) {
+                palindromo = teste;
+            }
         }
+
+
+        return palindromo;
     }
 
     public static void Main(string[] args){
-        string s = "abb";
-        string invertido = "";
-        string palindromo = "";
-        bool left = true;
-        
-        IsPalindromo(s, ref invertido, ref palindromo, ref left);
-        Console.WriteLine(palindromo);
+        string s = "aacabdkacaa";
+        string palindromo = IsPalindromo(s);
+
+        Console.WriteLine($"\nrespota: {palindromo}");
     }
 }
 
